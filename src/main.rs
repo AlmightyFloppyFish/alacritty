@@ -171,6 +171,7 @@ fn run(mut config: Config, options: &cli::Options) -> Result<(), Box<Error>> {
     let io_thread = event_loop.spawn(None);
 
     // Main display loop
+    let mut i = 0u128;
     loop {
         // Process input and window events
         let mut terminal = processor.process_events(&terminal, display.window());
@@ -197,6 +198,8 @@ fn run(mut config: Config, options: &cli::Options) -> Result<(), Box<Error>> {
             // of display size changes.
             display.handle_resize(&mut terminal, &config, &mut [&mut pty, &mut processor]);
 
+            println!("REDRAWING {}", i);
+            i += 1;
             // Draw the current state of the terminal
             display.draw(terminal, &config, processor.selection.as_ref());
         }
